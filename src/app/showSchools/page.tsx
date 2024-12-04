@@ -1,4 +1,3 @@
-// src/app/showSchools/page.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -60,7 +59,7 @@ export default function ShowSchools() {
             <div className="relative h-64 w-full">
               {school.image ? (
                 <Image 
-                  src={school.image} 
+                  src={school.image} // Correctly dynamic URL
                   alt={school.name}
                   fill
                   className="object-cover"
@@ -73,7 +72,7 @@ export default function ShowSchools() {
             </div>
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2 text-black">
-                {school.image}
+                {school.name}
               </h2>
               <p className="text-gray-600">{school.address}</p>
               <p className="text-gray-600">
