@@ -25,10 +25,10 @@ export async function POST(request: NextRequest) {
       const buffer = Buffer.from(bytes)
       
       const filename = `${Date.now()}_${imageFile.name}`
-      const path = join(process.cwd(), 'public/schoolImages', filename)
+      const path = join(process.cwd(), 'tmp/', filename)
       
       await writeFile(path, buffer)
-      imagePath = `/schoolImages/${filename}`
+      imagePath = `/${filename}`
     }
 
     // Insert school data
