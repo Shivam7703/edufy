@@ -1,14 +1,19 @@
-// src/app/api/schools/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
 import pool from '@/lib/db';
 import { School } from '@/types';
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: "dgrngnmbw",
+  api_key: "248466259674275",
+  api_secret: "miqg0ogRYS4Jk_NJus2ImXsAbKc",
+});
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-
+    
     // Extract form fields
     const name = formData.get('name') as string;
     const address = formData.get('address') as string;
@@ -17,30 +22,37 @@ export async function POST(request: NextRequest) {
     const contact = formData.get('contact') as string;
     const email_id = formData.get('email_id') as string;
     const imageFile = formData.get('image') as File;
-
-    // Handle image upload
+    
+    // Handle image upload to Cloudinary
     let imagePath = '';
     if (imageFile && imageFile.size > 0) {
       const bytes = await imageFile.arrayBuffer();
       const buffer = Buffer.from(bytes);
-
-      // Generate a unique filename
-      const filename = `${Date.now()}_${imageFile.name}`;
-      const tmpPath = join('/tmp', filename); // Use /tmp for temporary storage
-
-      // Write the image to the /tmp directory
-      await writeFile(tmpPath, buffer);
-
-      // Set the imagePath to the temporary file's URL
-      imagePath = `/tmp/${filename}`;
+      
+      const uploadResult = await new Promise<any>((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { 
+            resource_type: 'image', 
+            folder: 'schools'
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        
+        uploadStream.end(buffer);
+      });
+      
+      imagePath = uploadResult.secure_url;
     }
-
+    
     // Insert school data into the database
     const [result] = await pool.execute(
       'INSERT INTO schools (name, address, city, state, contact, email_id, image) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [name, address, city, state, contact, email_id, imagePath]
     );
-
+    
     return NextResponse.json(
       {
         message: 'School added successfully',
