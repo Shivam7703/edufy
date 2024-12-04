@@ -73,7 +73,7 @@ export default function ShowSchools() {
             </div>
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">
-                {school.name}
+                {school.image}
               </h2>
               <p className="text-gray-600">{school.address}</p>
               <p className="text-gray-600">
