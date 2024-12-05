@@ -46,38 +46,38 @@ export default function ShowSchools() {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center mb-8">
-        School Directory
+    <div className='min-h-[calc(100vh-186px)] w-full -px-14'>
+      <h1 className="text-3xl font-bold text-center mb-8 text-black">
+        School's List
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-7">
         {schools.map((school) => (
           <div 
             key={school.id} 
-            className="border rounded-lg overflow-hidden shadow-lg"
+            className="border rounded-lg overflow-hidden shadow-lg group hover:border-green-500"
           >
-            <div className="relative h-64 w-full">
+            <div className="relative h-64 w-full overflow-hidden">
               {school.image ? (
                 <Image 
                   src={school.image} // Correctly dynamic URL
                   alt={school.name}
                   fill
-                  className="object-cover"
+                  className="object-cover group-hover:scale-110 duration-300"
                 />
               ) : (
-                <div className="h-full w-full bg-gray-200 flex items-center justify-center">
+                <div className="h-full w-full bg-gray-200 flex items-center justify-center ">
                   No Image
                 </div>
               )}
             </div>
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2 text-black">
+            <div className=" p-4">
+              <div className='text-center'>⭐ ⭐ ⭐ ⭐ ⭐</div>
+              <p className='my-2 text-sm text-center text-blue-700'>{school.city}, {school.state}</p>
+              <h2 className="text-xl font-medium  text-black">
                 {school.name}
               </h2>
-              <p className="text-gray-600">{school.address}</p>
-              <p className="text-gray-600">
-                {school.city}, {school.state}
-              </p>
+              <p className="text-gray-500">{school.address}</p>
+              <div className='bg-green-600 rounded-md text-white group-hover:bg-black duration-200 mt-2 p-2 text-sm text-center'>Apply Now</div>
             </div>
           </div>
         ))}

@@ -3,13 +3,13 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center">
+    <div className="min-h-[calc(100vh-184px)] flex flex-col items-center justify-center">
       <div className="text-center space-y-6">
         <h1 className="text-4xl font-bold text-gray-900">
-          School Management System
+          Edunify - Web Development Assignment
         </h1>
         <p className="text-xl text-gray-600 mb-8">
-          Manage and explore school information effortlessly
+        You Can Easily Add and View Schools
         </p>
         <div className="flex justify-center space-x-4">
           <Link 

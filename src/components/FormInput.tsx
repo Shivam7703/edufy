@@ -7,25 +7,27 @@ const FormInput: React.FC<FormInputProps> = ({
   name,
   register,
   errors,
+ 
   type = 'text',
   ...rest
 }) => {
   return (
-    <div className="mb-4">
+    <div className={` mb-4 text-gray-700`}>
       <label 
         htmlFor={name} 
-        className="block text-sm font-medium text-gray-700 mb-2"
+        className="block text-sm font-bold mb-2"
       >
         {label}
       </label>
       <input
         id={name}
         type={type}
+        placeholder={label}
         {...register(name)}
-        className={`w-full px-3 py-2 border rounded-md shadow-sm 
+        className={`w-full px-3 py-2 border text-black placeholder:text-zinc-400 rounded-md shadow-sm 
           ${errors && errors[name] 
             ? 'border-red-500 focus:ring-red-500' 
-            : 'border-gray-300 focus:ring-blue-500'
+            : 'border-gray-600 focus:ring-blue-500'
           }`}
         {...rest}
       />
